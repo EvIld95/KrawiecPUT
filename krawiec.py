@@ -18,7 +18,7 @@ y = dataset.iloc[:, 0].values
 X = SelectKBest(chi2, k=8).fit_transform(X, y)
 
 # Splitting the dataset into the Training set and Test set
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
 # Feature Scaling

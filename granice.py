@@ -3,18 +3,12 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-from sklearn.cross_validation import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import chi2
-from sklearn.feature_selection import f_classif
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
 from sklearn.naive_bayes import GaussianNB
-from matplotlib.colors import ListedColormap
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
 
@@ -31,7 +25,7 @@ X = X[:, [0,1]]
 
 #print(X.shape, y.shape)
 # Splitting the dataset into the Training set and Test set
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
 

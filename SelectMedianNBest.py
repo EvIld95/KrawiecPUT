@@ -22,15 +22,17 @@ class SelectMedianNBest:
                 else:
                     letter_set[letter].append(attr[letter_id])
             for key, values in letter_set.items():
-                letter_mean_set[key] = np.median(letter_set[key])
-            sorted_letter_set = OrderedDict(sorted(letter_mean_set.items(), key=lambda t: t[1]))
+                letter_mean_set[key] = [np.median(letter_set[key]), np.std(letter_set[key])]
+            sorted_letter_set = OrderedDict(sorted(letter_mean_set.items(), key=lambda t: (t[1][0], t[1][1])))
+            median_avg = 0
             for key, value in sorted_letter_set.items():
-                if value not in sorted_letter_count_set:
-                    sorted_letter_count_set[value] = 1
+                median_avg += value[1]
+                if value[0] not in sorted_letter_count_set:
+                    sorted_letter_count_set[value[0]] = 1
                 else:
-                    sorted_letter_count_set[value] += 1
-            groups_per_attr[attr_index] = len(sorted_letter_count_set)
-        groups_per_attr = OrderedDict(sorted(groups_per_attr.items(), key=lambda t: t[1], reverse=True))
+                    sorted_letter_count_set[value[0]] += 1
+            groups_per_attr[attr_index] = [len(sorted_letter_count_set), median_avg/len(letter_set)]
+        groups_per_attr = OrderedDict(sorted(groups_per_attr.items(), key=lambda t: (-t[1][0], -t[1][1])))
         n_best_attr_groups_with_values = {k: groups_per_attr[k] for k in list(groups_per_attr)[:self.n_best]}
         n_best_attr_groups = list(n_best_attr_groups_with_values.keys())
         return self.X[:, n_best_attr_groups]
